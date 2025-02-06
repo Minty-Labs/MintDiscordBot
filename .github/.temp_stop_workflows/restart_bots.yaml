@@ -1,0 +1,23 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Restart Bots
+
+on:
+  workflow_run:
+    workflows: ["Deploy Bots"]
+    branches: ["master"]
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  restart:
+    runs-on: self-hosted
+
+    steps:
+    - name: Restart Bots
+      run: |
+          sudo systemctl restart HeadPat.service
+          sudo systemctl restart Michiru.service
+          sudo systemctl restart JasPosts.service
