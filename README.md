@@ -18,12 +18,12 @@
 </ul>
 
 <h2>Bots/Apps</h2>
-<h3>Giver of Head Pats</h3>
+<h3><img src="https://img.shields.io/static/v1?label=Giver%20of%20Head%20Pats&message=Version%206.0.0&color=389980&style=for-the-badge" /></h3>
 <p>
 	To be done
 </p>
 
-<h3>Michiru</h3>
+<h3><img src="https://img.shields.io/static/v1?label=Michiru&message=Version%202.0.0&color=389980&style=for-the-badge" /></h3>
 <p>
 	To be done
 </p>
