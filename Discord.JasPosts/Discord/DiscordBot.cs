@@ -72,7 +72,6 @@ namespace Discord.JasPosts.Discord {
             if (Vars.IsWindows)
                 Console.Title = "Jasmine Posts - Discord Bot - v" + Vars.Version;
             
-            await Client.UpdateStatusAsync(new DiscordActivity("Jasmine's Social Media", DiscordActivityType.Watching));
             await Task.CompletedTask;
         }
     }
