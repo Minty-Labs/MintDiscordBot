@@ -35,7 +35,7 @@
 
 <h3 align="center"><u>All Bots</u></h3>
 <p align="center">
-    <img src="https://img.shields.io/static/v1?label=Last%20Updated&message=5%20Feburary%202025&color=389980&style=for-the-badge" />
+    <img src="https://img.shields.io/static/v1?label=Last%20Updated&message=9%20Feburary%202025&color=389980&style=for-the-badge" />
     <img src="https://img.shields.io/static/v1?label=Language&message=C%23&color=C059D0&style=for-the-badge" />
     <a href="https://github.com/DSharpPlus/DSharpPlus"><img src="https://img.shields.io/static/v1?label=Library&message=DSharpPlus&color=7289DA&style=for-the-badge" /></a>
 </p>
