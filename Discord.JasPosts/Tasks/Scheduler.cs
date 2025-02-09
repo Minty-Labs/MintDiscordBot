@@ -22,7 +22,7 @@ namespace Discord.JasPosts.Tasks {
                 .WithIdentity("GetTwitterPosts", "JasPosts")
                 .StartAt(DateBuilder.FutureDate(1, IntervalUnit.Minute))
                 .WithSimpleSchedule(x => x
-                    .WithIntervalInHours(1)
+                    .WithIntervalInMinutes(15)
                     .RepeatForever())
                 .Build();
             await theScheduler.ScheduleJob(twitterLoopJob, twitterLoopTrigger);
@@ -30,7 +30,7 @@ namespace Discord.JasPosts.Tasks {
             var statusLoopJob = JobBuilder.Create<Jobs.DiscordStatusJob>().Build();
             var statusLoopTrigger = TriggerBuilder.Create()
                 .WithIdentity("DiscordStatus", "JasPosts")
-                .StartAt(DateBuilder.FutureDate(1, IntervalUnit.Minute))
+                .StartAt(DateBuilder.FutureDate(30, IntervalUnit.Second))
                 .WithSimpleSchedule(x => x
                     .WithIntervalInMinutes(10)
                     .RepeatForever())
