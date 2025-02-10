@@ -28,7 +28,7 @@
 	To be done
 </p>
 
-<h3><img src="https://img.shields.io/static/v1?label=Jasmine%20Posts&message=Version%201.0.0&color=389980&style=for-the-badge" /></h3>
+<h3><img src="https://img.shields.io/static/v1?label=Jasmine%20Posts&message=Version%201.0.2&color=389980&style=for-the-badge" /></h3>
 <p>
 	Uses a Twitter scrapping script made by <a href="https://github.com/WyanJonathan" target="_blank">@WyanJonathan</a>, used to find posts for a user and automatically sends a message to a Discord channel.
 </p>
