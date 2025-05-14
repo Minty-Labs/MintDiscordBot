@@ -33,7 +33,7 @@ namespace Discord.JasPosts.Tasks.Jobs {
                 outputAction = 4;
             }
             else {
-                try {
+                await Try.Catch(async () => {
                     Process process;
 
                     if (Vars.IsWindows) {
@@ -83,12 +83,10 @@ namespace Discord.JasPosts.Tasks.Jobs {
                         outputAction = 2;
                         throw new Exception($"Error in GetTwitterPostsJob: {error}");
                     }
-                    // Program.DiscordBot.Client.Logger.LogInformation("Twscrape.py output: \n{0}", DecodeEncodedNonAsciiCharacters(output));
-                }
-                catch (Exception err) {
-                    outputAction = 2;
-                    throw new Exception("Error in GetTwitterPostsJob", err);
-                }
+                }, ex => {
+                    OutputAction = TwitterOutputActionEnum.FailedWithErrors;
+                    throw new Exception("Error in GetTwitterPostsJob", ex);
+                });
 
                 if (BotConfig.Config.Instance.TwitterChannelId is 0) {
                     outputAction = 2;
