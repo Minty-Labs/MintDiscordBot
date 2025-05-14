@@ -28,14 +28,14 @@
 	To be done
 </p>
 
-<h3><img src="https://img.shields.io/static/v1?label=Jasmine%20Posts&message=Version%201.0.2&color=389980&style=for-the-badge" /></h3>
+<h3><img src="https://img.shields.io/static/v1?label=Jasmine%20Posts&message=Version%201.0.3&color=389980&style=for-the-badge" /></h3>
 <p>
 	Uses a Twitter scrapping script made by <a href="https://github.com/WyanJonathan" target="_blank">@WyanJonathan</a>, used to find posts for a user and automatically sends a message to a Discord channel.
 </p>
 
 <h3 align="center"><u>All Bots</u></h3>
 <p align="center">
-    <img src="https://img.shields.io/static/v1?label=Last%20Updated&message=9%20Feburary%202025&color=389980&style=for-the-badge" />
+    <img src="https://img.shields.io/static/v1?label=Last%20Updated&message=13%20May%202025&color=389980&style=for-the-badge" />
     <img src="https://img.shields.io/static/v1?label=Language&message=C%23&color=C059D0&style=for-the-badge" />
     <a href="https://github.com/DSharpPlus/DSharpPlus"><img src="https://img.shields.io/static/v1?label=Library&message=DSharpPlus&color=7289DA&style=for-the-badge" /></a>
 </p>

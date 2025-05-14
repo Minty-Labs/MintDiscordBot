@@ -12,7 +12,7 @@ using TimestampFormat = Discord.Common.Helpers.TimestampFormat;
 
 namespace Discord.JasPosts.Discord {
     internal static class Vars {
-        public const string Version = "1.0.2";
+        public const string Version = "1.0.3";
         public static bool IsWindows;
         // public static DateTime StartTime;
         
@@ -27,9 +27,9 @@ namespace Discord.JasPosts.Discord {
             DiscordConfig.Config.Instance.DiscordToken,
             new CustomValueHolderExtension<AboutInfoItem> {
                 Value = new AboutInfoItem(
-                    new AboutInfoItem.InfoBase(new DiscordColor("C61219"), "Jasmine's Twitter/X auto status poaster", "https://discord.gg/Qg9eVB34sq",
+                    new AboutInfoItem.InfoBase(new DiscordColor("EC6996"), "Jasmine's Twitter/X auto status poaster", "https://discord.gg/Qg9eVB34sq",
                         "https://mintylabs.dev/JasPosts", "null", "https://mintylabs.dev/JasPosts/privacy", "https://mintylabs.dev/JasPosts"),
-                    new AboutInfoItem.InviteUnavailable("This bot is only available for the Napping Grove."))
+                    new AboutInfoItem.InviteUnavailable("This bot is only available for the Strawberry Grove."))
             },
             DiscordIntents.Guilds | DiscordIntents.GuildMessages | DiscordIntents.GuildMembers | DiscordIntents.MessageContents | DiscordIntents.AllUnprivileged,
             enableText: true,
@@ -49,7 +49,7 @@ namespace Discord.JasPosts.Discord {
             await Task.Delay(1000);
             // Vars.StartTime = UtcNow;
             DiscordEmbedBuilder builder = new() {
-                Color = new DiscordColor("C61219"),
+                Color = new DiscordColor("EC6996"),
                 Footer = new DiscordEmbedBuilder.EmbedFooter {
                     Text = $"v{Vars.Version}",
                     IconUrl = Client.CurrentUser.GetAvatarUrl(ImageFormat.Png)
@@ -60,7 +60,7 @@ namespace Discord.JasPosts.Discord {
             // builder.AddField("Guilds", Client.Guilds.Count.ToString(), true);
             // builder.AddField("Users", Client.Guilds.Values.Sum(x => x.MemberCount).ToString(), true);
             builder.AddField("Start Time", $"{UtcNow.ConvertToDiscordTimestamp(TimestampFormat.LongDateTime)}\n{UtcNow.ConvertToDiscordTimestamp(TimestampFormat.RelativeTime)}");
-            builder.AddField("Target .NET Version", "9.0.1", true);
+            builder.AddField("Target .NET Version", "9.0.5", true);
             builder.AddField("System .NET Version", Environment.Version.ToString(), true);
             builder.AddField("DSharpPlus Version", Vars.DSharpVersion, true);
 
