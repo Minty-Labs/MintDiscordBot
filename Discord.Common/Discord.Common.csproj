@@ -11,11 +11,12 @@
     <PackageReference Include="DSharpPlus.Commands" Version="5.0.0-nightly-02453" />
     <PackageReference Include="DSharpPlus.Rest" Version="5.0.0-nightly-02453" />
     <PackageReference Include="DSharpPlus.Interactivity" Version="5.0.0-nightly-02453" />
-    <PackageReference Include="Lib.Harmony" Version="2.3.4" />
-    <PackageReference Include="MongoDB.Driver" Version="3.1.0" />
+    <PackageReference Include="Lib.Harmony" Version="2.3.6" />
+    <PackageReference Include="MongoDB.Driver" Version="3.4.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RestSharp" Version="112.1.0" />
     <PackageReference Include="Serilog" Version="4.2.0" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.1" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
   </ItemGroup>
 
