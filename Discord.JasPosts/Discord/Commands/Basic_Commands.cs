@@ -28,11 +28,11 @@ namespace Discord.JasPosts.Discord.Commands {
             var job = new GetTwitterPostsJob();
             await job.Run(forceLastTweet);
 
-            var text = job.outputAction switch {
-                1 => "Successfully fetched the latest Twitter posts.",
-                2 => "Failed to fetch the latest Twitter posts.",
-                3 => "Successfully fetched the latest Twitter posts, but there are no new tweets.",
-                4 => "Successfully fetched the latest Twitter posts, and forced the last tweet.",
+            var text = job.OutputAction switch {
+                TwitterOutputActionEnum.Finished => "Successfully fetched the latest Twitter posts.",
+                TwitterOutputActionEnum.FailedWithErrors => "Failed to fetch the latest Twitter posts.",
+                TwitterOutputActionEnum.FinishedWithNoNewTweet => "Successfully fetched the latest Twitter posts, but there are no new tweets.",
+                TwitterOutputActionEnum.ForcedLastTweet => "Successfully fetched the latest Twitter posts, and forced the last tweet.",
                 _ => "Unknown output action."
             };
 

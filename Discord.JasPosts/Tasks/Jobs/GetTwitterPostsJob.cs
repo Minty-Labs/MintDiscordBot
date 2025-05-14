@@ -7,12 +7,10 @@ using Discord.JasPosts.Discord;
 using Microsoft.Extensions.Logging;
 
 namespace Discord.JasPosts.Tasks.Jobs {
+    internal class GetTwitterPostsJob {
+        public async Task Execute() => await Run();
 
-        public int outputAction;
-        // 1 - finished
-        // 2 - failed with errors
-        // 3 - finished, no new tweet
-        // 4 - forced last tweet finished
+        public TwitterOutputActionEnum OutputAction;
 
         public async Task Run(bool forceLastTweet = false) {
             Program.DiscordBot.Client.Logger.LogInformation("Running GetTwitterPostsJob...");
@@ -23,14 +21,14 @@ namespace Discord.JasPosts.Tasks.Jobs {
                     throw new Exception("Error reading TwitterScriptPreviousXIdFile");
 
                 var lastLine = data.Last(x => !string.IsNullOrWhiteSpace(x));
-                var tweet = $"https://fixupx.com/JasmineLovingVR/status/{lastLine}";
+                var tweet = $"https://fixupx.com/TeaLilith/status/{lastLine}";
 
                 var channel = await Program.DiscordBot.Client.GetChannelAsync(BotConfig.Config.Instance.TwitterChannelId);
                 var twitterPostRole = await channel.Guild.GetRoleAsync(BotConfig.Config.Instance.TwitterPostsPingRoleId);
 
-                Program.DiscordBot.Client.Logger.LogInformation("New Twitter post: {0}", tweet);
+                Program.DiscordBot.Client.Logger.LogInformation("New Twitter post: {url}", tweet);
                 await channel.SendMessageAsync($"New Twitter post: {tweet}\n{MarkdownUtils.ToSubText(twitterPostRole.Mention)}");
-                outputAction = 4;
+                OutputAction = TwitterOutputActionEnum.ForcedLastTweet;
             }
             else {
                 await Try.Catch(async () => {
@@ -75,12 +73,12 @@ namespace Discord.JasPosts.Tasks.Jobs {
                     }
 
                     process.Start();
-                    var output = await process.StandardOutput.ReadToEndAsync();
+                    await process.StandardOutput.ReadToEndAsync();
                     var error = await process.StandardError.ReadToEndAsync();
                     await process.WaitForExitAsync();
 
                     if (!string.IsNullOrWhiteSpace(error)) {
-                        outputAction = 2;
+                        OutputAction = TwitterOutputActionEnum.FailedWithErrors;
                         throw new Exception($"Error in GetTwitterPostsJob: {error}");
                     }
                 }, ex => {
@@ -89,7 +87,7 @@ namespace Discord.JasPosts.Tasks.Jobs {
                 });
 
                 if (BotConfig.Config.Instance.TwitterChannelId is 0) {
-                    outputAction = 2;
+                    OutputAction = TwitterOutputActionEnum.FailedWithErrors;
                     throw new Exception("TwitterChannelId is not set in bot config");
                 }
 
@@ -99,19 +97,19 @@ namespace Discord.JasPosts.Tasks.Jobs {
 
                 var data = JsonSerializer.Deserialize<DataJson>(stringJsonData);
                 if (data is null) {
-                    outputAction = 2;
+                    OutputAction = TwitterOutputActionEnum.FailedWithErrors;
                     throw new Exception("Error deserializing JSON data");
                 }
 
                 if (data.Id == "0" || data.url == "None") {
                     Program.DiscordBot.Client.Logger.LogInformation("No new Twitter post");
-                    outputAction = 3;
+                    OutputAction = TwitterOutputActionEnum.FinishedWithNoNewTweet;
                     return;
                 }
 
-                Program.DiscordBot.Client.Logger.LogInformation("New Twitter post: {0}", data.url);
+                Program.DiscordBot.Client.Logger.LogInformation("New Twitter post: {url}", data.url);
                 await channel.SendMessageAsync($"New Twitter post: {data.url}\n{MarkdownUtils.ToSubText(twitterPostRole.Mention)}");
-                outputAction = 1;
+                OutputAction = TwitterOutputActionEnum.Finished;
             }
 
             await Task.Delay(TimeSpan.FromSeconds(1));
@@ -121,6 +119,13 @@ namespace Discord.JasPosts.Tasks.Jobs {
 }
 
 internal class DataJson {
-    [JsonPropertyName("id")] public string? Id { get; set; }
-    [JsonPropertyName("URL")] public string? url { get; set; }
+    [JsonPropertyName("id")] public string? Id { get; init; }
+    [JsonPropertyName("URL")] public string? url { get; init; }
+}
+
+internal enum TwitterOutputActionEnum {
+    Finished = 0,
+    FailedWithErrors = 1,
+    FinishedWithNoNewTweet = 2,
+    ForcedLastTweet = 3
 }
