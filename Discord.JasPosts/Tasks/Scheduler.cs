@@ -1,41 +1,24 @@
-using System.Diagnostics;
-using System.Globalization;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Discord.Common.Helpers;
-using Discord.JasPosts;
-using Discord.JasPosts.Config;
-using Discord.JasPosts.Discord;
+using FluentScheduler;
 using Microsoft.Extensions.Logging;
-using Quartz;
 
 namespace Discord.JasPosts.Tasks {
-    public class Scheduler {
-        public static async Task Initialize() {
-            var theScheduler = await SchedulerBuilder.Create()
-                .UseDefaultThreadPool(x => x.MaxConcurrency = 2)
-                .BuildScheduler();
-            await theScheduler.Start();
-
-            var twitterLoopJob = JobBuilder.Create<Jobs.GetTwitterPostsJob>().Build();
-            var twitterLoopTrigger = TriggerBuilder.Create()
-                .WithIdentity("GetTwitterPosts", "JasPosts")
-                .StartAt(DateBuilder.FutureDate(1, IntervalUnit.Minute))
-                .WithSimpleSchedule(x => x
-                    .WithIntervalInMinutes(15)
-                    .RepeatForever())
-                .Build();
-            await theScheduler.ScheduleJob(twitterLoopJob, twitterLoopTrigger);
+    internal class Scheduler {
+        public async Task Initialize() {
+            await Task.Delay(TimeSpan.FromSeconds(30));
+            Program.DiscordBot.Client.Logger.LogInformation("Starting the initial Discord Status Job...");
+            var statusJob = new Jobs.DiscordStatusJob();
+            new Schedule(
+                statusJob.Execute,
+                run => run.Every(15).Minutes()
+            ).Start();
             
-            var statusLoopJob = JobBuilder.Create<Jobs.DiscordStatusJob>().Build();
-            var statusLoopTrigger = TriggerBuilder.Create()
-                .WithIdentity("DiscordStatus", "JasPosts")
-                .StartAt(DateBuilder.FutureDate(30, IntervalUnit.Second))
-                .WithSimpleSchedule(x => x
-                    .WithIntervalInMinutes(10)
-                    .RepeatForever())
-                .Build();
-            await theScheduler.ScheduleJob(statusLoopJob, statusLoopTrigger);
+            await Task.Delay(TimeSpan.FromSeconds(30));
+            Program.DiscordBot.Client.Logger.LogInformation("Starting the initial Twitter Posts Job...");
+            var twitterJob = new Jobs.GetTwitterPostsJob();
+            new Schedule(
+                twitterJob.Execute,
+                run => run.Every(10).Minutes()
+            ).Start();
         }
     }
 }

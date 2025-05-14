@@ -40,7 +40,7 @@ namespace Discord.JasPosts.Discord {
         public new async Task Start() {
             Vars.IsWindows = Environment.OSVersion.ToString().Contains("windows", StringComparison.CurrentCultureIgnoreCase);
             Client.Logger.LogInformation("Starting bot...");
-            await Scheduler.Initialize();
+            await new Scheduler().Initialize();
             await base.Start();
             await CommonHelper.RunAsync(DelayedTask);
         }

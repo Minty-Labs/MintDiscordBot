@@ -5,11 +5,8 @@ using Discord.Common.Helpers;
 using Discord.JasPosts.Config;
 using Discord.JasPosts.Discord;
 using Microsoft.Extensions.Logging;
-using Quartz;
 
 namespace Discord.JasPosts.Tasks.Jobs {
-    internal class GetTwitterPostsJob : IJob {
-        public async Task Execute(IJobExecutionContext context) => await Run();
 
         public int outputAction;
         // 1 - finished
